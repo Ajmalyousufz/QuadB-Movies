@@ -1,5 +1,6 @@
 package com.ajmalyousufza.quadbmovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,6 +33,8 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     HomeRVAdapter adapter;
     ArrayList<HomeRVModel> homeRVModelArrayList;
+    ProgressBar progressBar;
+    HomeRVAdapter.RecyclerViewClickListener recyclerViewClickListener;
 
     String url = "https://api.tvmaze.com/search/shows?q=all";
 
@@ -47,10 +51,10 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerview);
-       // recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerView.setVisibility(View.GONE);
+        progressBar = view.findViewById(R.id.progressbar);
+        setOnClickListener();
         homeRVModelArrayList = new ArrayList<>();
-       // adapter = new HomeRVAdapter(homeRVModelArrayList,getContext());
-       // recyclerView.setAdapter(adapter);
 
         getRecler();
         getData();
@@ -71,6 +75,11 @@ public class HomeFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+
+
+                        recyclerView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
@@ -109,8 +118,27 @@ public class HomeFragment extends Fragment {
 
     }
 
+    public void setOnClickListener(){
+        recyclerViewClickListener = new HomeRVAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+
+                Intent intent = new Intent(getContext(),DetailedActivity.class);
+                intent.putExtra("m_name",homeRVModelArrayList.get(position).getShow().getName());
+                intent.putExtra("m_image",homeRVModelArrayList.get(position).getShow().getImage().getOriginal());
+                intent.putExtra("m_rating",homeRVModelArrayList.get(position).getShow().getRating().getAverage());
+                intent.putExtra("m_sche_day",homeRVModelArrayList.get(position).getShow().getSchedule().getDays());
+                intent.putExtra("m_sche_time",homeRVModelArrayList.get(position).getShow().getSchedule().getTime());
+                intent.putExtra("m_summary",homeRVModelArrayList.get(position).getShow().getSummary());
+                intent.putExtra("m_language",homeRVModelArrayList.get(position).getShow().getLanguage());
+
+                startActivity(intent);
+            }
+        };
+    }
+
     private void getRecler() {
-        adapter = new HomeRVAdapter(homeRVModelArrayList,getContext());
+        adapter = new HomeRVAdapter(homeRVModelArrayList,getContext(),recyclerViewClickListener);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerView.setAdapter(adapter);
     }

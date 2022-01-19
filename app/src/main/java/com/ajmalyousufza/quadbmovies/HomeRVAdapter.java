@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +20,12 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.ViewHolder
 
     ArrayList<HomeRVModel> homeRVModelArrayList;
     Context context;
+    RecyclerViewClickListener listener;
 
-    public HomeRVAdapter(ArrayList<HomeRVModel> homeRVModelArrayList, Context context) {
+    public HomeRVAdapter(ArrayList<HomeRVModel> homeRVModelArrayList, Context context,RecyclerViewClickListener listener) {
         this.homeRVModelArrayList = homeRVModelArrayList;
         this.context = context;
+        this.listener=listener;
     }
 
     @NonNull
@@ -54,16 +57,31 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.ViewHolder
         return homeRVModelArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public interface RecyclerViewClickListener{
+        void onClick(View v,int position);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView movie_image;
         TextView movie_name;
+        LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
           movie_image =  itemView.findViewById(R.id.movie_image_home);
            movie_name= itemView.findViewById(R.id.movie_name_home);
+           linearLayout = itemView.findViewById(R.id.linlayitem);
+
+           linearLayout.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            listener.onClick(view,getAdapterPosition());
 
         }
     }
