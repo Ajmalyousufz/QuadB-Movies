@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -13,19 +14,29 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+    EditText searchbar;
+    Fragment fragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         bottomNavigationView = findViewById(R.id.bottom_nav);
-        getSupportFragmentManager().beginTransaction().replace(R.id.action_bar_container,new HomeFragment()).commit();
+        searchbar = findViewById(R.id.searchbar);
+        getSupportFragmentManager().beginTransaction().replace(R.id.body_container,new HomeFragment()).commit();
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        searchbar.setOnClickListener(view -> {
+            fragment = new SearchFragment();
+        });
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
+
                 int id = item.getItemId();
 
                 switch (id){
@@ -38,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.action_bar_container,fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.body_container,fragment).commit();
 
                 return true;
             }
