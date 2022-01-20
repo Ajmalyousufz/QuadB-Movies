@@ -108,6 +108,8 @@ public class SearchFragment extends Fragment {
                         recyclerView.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         homeRVModelArrayListSearch.clear();
+
+
                         for (int i = 0; i < response.length(); i++) {
                             try {
 
@@ -127,6 +129,7 @@ public class SearchFragment extends Fragment {
                                                 new schedule(schedule_time, schedule_days), new rating(rating), language)
                                 ));
 
+
                                 if(jsonObject.getJSONObject("show").getString("name").equals(position)){
                                     searchIndex = i;
                                     homeRVModelArrayListSearch.add(new HomeRVModel(
@@ -142,6 +145,11 @@ public class SearchFragment extends Fragment {
                                 Toast.makeText(getContext(), "Error " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
+
+                        if(homeRVModelArrayListSearch.isEmpty()){
+                            Toast.makeText(getContext(), "Check Movie name entered...", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -152,6 +160,7 @@ public class SearchFragment extends Fragment {
         );
 
         queue.add(jsonArrayRequest);
+
 
     }
 
