@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
             //String searchstr = "https://api.tvmaze.com/search/shows?q=${"+editText.getText().toString()+"}";
             if(editText.getText().toString().isEmpty()){
 
-                 searchstr = "No Data";
+                 searchstr = "";
             }
             else {
                  searchstr = editText.getText().toString();

@@ -52,8 +52,9 @@
         android:layout_height="wrap_content"/>
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/colorPrimaryDark"
         android:id="@+id/recyclerview"
-        android:layout_margin="5dp"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     </LinearLayout>

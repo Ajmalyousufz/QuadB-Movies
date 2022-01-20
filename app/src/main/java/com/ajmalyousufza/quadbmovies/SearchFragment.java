@@ -80,7 +80,6 @@ public class SearchFragment extends Fragment {
         Toast.makeText(getContext(), searchkey , Toast.LENGTH_SHORT).show();
         getRecler();
         getData(searchkey);
-        //getSearchData("https://api.tvmaze.com/search/shows?q=${"+searchkey+"}");
         return  view;
     }
 

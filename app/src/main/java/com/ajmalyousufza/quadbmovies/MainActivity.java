@@ -2,6 +2,7 @@ package com.ajmalyousufza.quadbmovies;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -19,16 +20,19 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    EditText searchbar;
+    Toolbar toolbar;
     Fragment fragment = null;
-    ImageView imageView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
+
+        toolbar = findViewById(R.id.mytoolbar);
+        setSupportActionBar(toolbar);
+
+//        getSupportActionBar().setTitle("");
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         //searchbar = findViewById(R.id.searchbar);
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
 
-           
+
 
             return;
         }
