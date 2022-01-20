@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     ArrayList<HomeRVModel> homeRVModelArrayList;
     ArrayList<HomeRVModel> homeRVModelArrayListSearch;
     ProgressBar progressBar;
-    HomeRVAdapter.RecyclerViewClickListener recyclerViewClickListener;
+    HomeRVAdapter.RecyclerViewClickListener1 recyclerViewClickListener;
     ImageView imageView;
     EditText editText;
 
@@ -166,7 +166,7 @@ public class HomeFragment extends Fragment {
 
 
     public void setOnClickListener(){
-        recyclerViewClickListener = new HomeRVAdapter.RecyclerViewClickListener() {
+        recyclerViewClickListener = new HomeRVAdapter.RecyclerViewClickListener1() {
             @Override
             public void onClick(View v, int position) {
 

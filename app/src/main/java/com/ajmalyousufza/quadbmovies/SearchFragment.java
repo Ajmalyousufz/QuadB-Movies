@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment {
 
 
-    ArrayList<HomeRVModel> homeRVModelArrayListSearch;
+    ArrayList<HomeRVModel> homeRVModelArrayListSearch,homeRVModels;
     SearchMovieAdapter.RecyclerViewClickListener recyclerViewClickListener;
     RecyclerView recyclerView;
     SearchMovieAdapter adapter;
@@ -40,6 +41,7 @@ public class SearchFragment extends Fragment {
     String url = "https://api.tvmaze.com/search/shows?q=all";
     int searchIndex = -1;
     String searchkey;
+    ProgressBar progressBar;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -53,17 +55,22 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         homeRVModelArrayListSearch = new ArrayList<>();
+        homeRVModels = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerview1);
         editText = view.findViewById(R.id.searchbar1);
         imageView = view.findViewById(R.id.searchicon1);
+        progressBar = view.findViewById(R.id.progressbar);
 
 //        assert getArguments() != null;
              searchkey = getArguments().getString("searchkey");
 
 
         editText.setText(searchkey);
+        setOnClickListener();
         imageView.setOnClickListener(view1 -> {
 
+            recyclerView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
             String searchk = editText.getText().toString();
             if(!searchkey.equals(editText.getText().toString())){
                 getData(searchk);
@@ -92,10 +99,11 @@ public class SearchFragment extends Fragment {
 
 
                         recyclerView.setVisibility(View.VISIBLE);
-                        //progressBar.setVisibility(View.GONE);
-
+                        progressBar.setVisibility(View.GONE);
+                        homeRVModelArrayListSearch.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
+
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 String name = jsonObject.getJSONObject("show").getString("name");
@@ -106,6 +114,11 @@ public class SearchFragment extends Fragment {
                                 String schedule_time = jsonObject.getJSONObject("show").getJSONObject("schedule").getString("time");
                                 String schedule_days = jsonObject.getJSONObject("show").getJSONObject("schedule").getString("days");
                                 String rating = jsonObject.getJSONObject("show").getJSONObject("rating").getString("average");
+
+                                homeRVModels.add(new HomeRVModel(
+                                        new Show(name, summary, new image(image_url_medium, image_url_original),
+                                                new schedule(schedule_time, schedule_days), new rating(rating), language)
+                                ));
 
                                 if(jsonObject.getJSONObject("show").getString("name").equals(position)){
                                     searchIndex = i;
@@ -191,16 +204,16 @@ public class SearchFragment extends Fragment {
     public void setOnClickListener(){
         recyclerViewClickListener = new SearchMovieAdapter.RecyclerViewClickListener() {
             @Override
-            public void onClick(View v, int position) {
-
+            public void onClick1(View v, int position) {
+                //Toast.makeText(getContext(), "position : "+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(),DetailedActivity.class);
-                intent.putExtra("m_name",homeRVModelArrayListSearch.get(position).getShow().getName());
-                intent.putExtra("m_image",homeRVModelArrayListSearch.get(position).getShow().getImage().getOriginal());
-                intent.putExtra("m_rating",homeRVModelArrayListSearch.get(position).getShow().getRating().getAverage());
-                intent.putExtra("m_sche_day",homeRVModelArrayListSearch.get(position).getShow().getSchedule().getDays());
-                intent.putExtra("m_sche_time",homeRVModelArrayListSearch.get(position).getShow().getSchedule().getTime());
-                intent.putExtra("m_summary",homeRVModelArrayListSearch.get(position).getShow().getSummary());
-                intent.putExtra("m_language",homeRVModelArrayListSearch.get(position).getShow().getLanguage());
+                intent.putExtra("m_name",homeRVModels.get(searchIndex).getShow().getName());
+                intent.putExtra("m_image",homeRVModels.get(searchIndex).getShow().getImage().getOriginal());
+                intent.putExtra("m_rating",homeRVModels.get(searchIndex).getShow().getRating().getAverage());
+                intent.putExtra("m_sche_day",homeRVModels.get(searchIndex).getShow().getSchedule().getDays());
+                intent.putExtra("m_sche_time",homeRVModels.get(searchIndex).getShow().getSchedule().getTime());
+                intent.putExtra("m_summary",homeRVModels.get(searchIndex).getShow().getSummary());
+                intent.putExtra("m_language",homeRVModels.get(searchIndex).getShow().getLanguage());
 
                 startActivity(intent);
             }
@@ -209,7 +222,7 @@ public class SearchFragment extends Fragment {
 
     private void getRecler() {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        adapter = new SearchMovieAdapter(homeRVModelArrayListSearch,getContext(),recyclerViewClickListener);
+        adapter = new SearchMovieAdapter(homeRVModelArrayListSearch,getContext(),recyclerViewClickListener,searchIndex);
         recyclerView.setAdapter(adapter);
     }
 }

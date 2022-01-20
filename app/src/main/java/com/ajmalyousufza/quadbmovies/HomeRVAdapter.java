@@ -20,9 +20,9 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.ViewHolder
 
     ArrayList<HomeRVModel> homeRVModelArrayList;
     Context context;
-    RecyclerViewClickListener listener;
+    RecyclerViewClickListener1 listener;
 
-    public HomeRVAdapter(ArrayList<HomeRVModel> homeRVModelArrayList, Context context,RecyclerViewClickListener listener) {
+    public HomeRVAdapter(ArrayList<HomeRVModel> homeRVModelArrayList, Context context,RecyclerViewClickListener1 listener) {
         this.homeRVModelArrayList = homeRVModelArrayList;
         this.context = context;
         this.listener=listener;
@@ -57,7 +57,7 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.ViewHolder
         return homeRVModelArrayList.size();
     }
 
-    public interface RecyclerViewClickListener{
+    public interface RecyclerViewClickListener1{
         void onClick(View v,int position);
     }
 

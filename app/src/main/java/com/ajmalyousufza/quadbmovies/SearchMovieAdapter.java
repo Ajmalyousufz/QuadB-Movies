@@ -1,12 +1,14 @@
 package com.ajmalyousufza.quadbmovies;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +22,14 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
     ArrayList<HomeRVModel> homeRVModelArrayList;
     Context context;
-    RecyclerViewClickListener listener;
+    RecyclerViewClickListener listener1;
+    int pos;
 
-    public SearchMovieAdapter(ArrayList<HomeRVModel> homeRVModelArrayList, Context context,RecyclerViewClickListener listener) {
+    public SearchMovieAdapter(ArrayList<HomeRVModel> homeRVModelArrayList, Context context,RecyclerViewClickListener listener1,int pos) {
         this.homeRVModelArrayList = homeRVModelArrayList;
         this.context = context;
-        this.listener=listener;
+        this.listener1=listener1;
+        this.pos=pos;
     }
 
     @NonNull
@@ -58,7 +62,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
     }
 
     public interface RecyclerViewClickListener{
-        void onClick(View v,int position);
+        void onClick1(View v,int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -81,7 +85,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         @Override
         public void onClick(View view) {
 
-            listener.onClick(view,getAdapterPosition());
+            listener1.onClick1(view,getAdapterPosition());
 
         }
     }
