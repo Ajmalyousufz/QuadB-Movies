@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,11 +34,15 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
 
+
     RecyclerView recyclerView;
     HomeRVAdapter adapter;
     ArrayList<HomeRVModel> homeRVModelArrayList;
+    ArrayList<HomeRVModel> homeRVModelArrayListSearch;
     ProgressBar progressBar;
     HomeRVAdapter.RecyclerViewClickListener recyclerViewClickListener;
+    ImageView imageView;
+    EditText editText;
 
     String url = "https://api.tvmaze.com/search/shows?q=all";
 
@@ -50,14 +58,51 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        imageView = view.findViewById(R.id.searchicon1);
+        editText = view.findViewById(R.id.searchbar1);
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setVisibility(View.GONE);
-        progressBar = view.findViewById(R.id.progressbar);
+        progressBar = view.findViewById(R.id.progressbar1);
         setOnClickListener();
         homeRVModelArrayList = new ArrayList<>();
+        homeRVModelArrayListSearch = new ArrayList<>();
 
         getRecler();
         getData();
+
+        imageView.setOnClickListener(view1 -> {
+            String searchstr;
+            //String searchstr = "https://api.tvmaze.com/search/shows?q=${"+editText.getText().toString()+"}";
+            if(editText.getText().toString().isEmpty()){
+
+                 searchstr = "No Data";
+            }
+            else {
+                 searchstr = editText.getText().toString();
+            }
+            //getSearchData(searchstr);
+
+            SearchFragment fragment2 = new SearchFragment();
+            Bundle args = new Bundle();
+            args.putString("searchkey",searchstr);
+            fragment2.setArguments(args);
+            FragmentManager fragmentManager = getParentFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.body_container, fragment2);
+            fragmentTransaction.commit();
+
+//            Intent intent = new Intent(getContext(),SearchFragment.class);
+//            intent.putExtra("searchurl",searchstr);
+//            intent.putExtra("m_name",homeRVModelArrayListSearch.get(0).getShow().getName());
+//            intent.putExtra("m_image",homeRVModelArrayListSearch.get(0).getShow().getImage().getOriginal());
+//            intent.putExtra("m_rating",homeRVModelArrayListSearch.get(0).getShow().getRating().getAverage());
+//            intent.putExtra("m_sche_day",homeRVModelArrayListSearch.get(0).getShow().getSchedule().getDays());
+//            intent.putExtra("m_sche_time",homeRVModelArrayListSearch.get(0).getShow().getSchedule().getTime());
+//            intent.putExtra("m_summary",homeRVModelArrayListSearch.get(0).getShow().getSummary());
+//            intent.putExtra("m_language",homeRVModelArrayListSearch.get(0).getShow().getLanguage());
+//            startActivity(intent);
+
+        });
 
         return view;
     }
@@ -117,6 +162,8 @@ public class HomeFragment extends Fragment {
         queue.add(jsonArrayRequest);
 
     }
+
+
 
     public void setOnClickListener(){
         recyclerViewClickListener = new HomeRVAdapter.RecyclerViewClickListener() {

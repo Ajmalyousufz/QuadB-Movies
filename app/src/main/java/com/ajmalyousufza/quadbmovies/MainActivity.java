@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     EditText searchbar;
     Fragment fragment = null;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +29,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
-        searchbar = findViewById(R.id.searchbar);
+        //searchbar = findViewById(R.id.searchbar);
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container,new HomeFragment()).commit();
         bottomNavigationView.setSelectedItemId(R.id.home);
+        //imageView = findViewById(R.id.searchicon1);
 
-        searchbar.setOnClickListener(view -> {
-            fragment = new SearchFragment();
-        });
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.search:
                         fragment = new SearchFragment();
+                        Bundle args = new Bundle();
+                        args.putString("searchkey","");
+                        fragment.setArguments(args);
                         break;
                 }
 
