@@ -1,4 +1,4 @@
-package com.ajmalyousufza.quadbmovies;
+package com.ajmalyousufza.quadbmovies.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.ajmalyousufza.quadbmovies.Activities.DetailedActivity;
+import com.ajmalyousufza.quadbmovies.Models.HomeRVModel;
+import com.ajmalyousufza.quadbmovies.Models.image;
+import com.ajmalyousufza.quadbmovies.Models.rating;
+import com.ajmalyousufza.quadbmovies.Models.schedule;
+import com.ajmalyousufza.quadbmovies.R;
+import com.ajmalyousufza.quadbmovies.Adapters.SearchMovieAdapter;
+import com.ajmalyousufza.quadbmovies.Models.Show;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -61,9 +69,7 @@ public class SearchFragment extends Fragment {
         imageView = view.findViewById(R.id.searchicon1);
         progressBar = view.findViewById(R.id.progressbar);
 
-//        assert getArguments() != null;
-             searchkey = getArguments().getString("searchkey");
-
+        searchkey = getArguments().getString("searchkey");
 
         editText.setText(searchkey);
         setOnClickListener();
@@ -72,9 +78,11 @@ public class SearchFragment extends Fragment {
             recyclerView.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             String searchk = editText.getText().toString();
+
             if(!searchkey.equals(editText.getText().toString())){
                 getData(searchk);
             }
+
         });
 
         Toast.makeText(getContext(), searchkey , Toast.LENGTH_SHORT).show();
@@ -205,7 +213,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick1(View v, int position) {
                 //Toast.makeText(getContext(), "position : "+position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(),DetailedActivity.class);
+                Intent intent = new Intent(getContext(), DetailedActivity.class);
                 intent.putExtra("m_name",homeRVModels.get(searchIndex).getShow().getName());
                 intent.putExtra("m_image",homeRVModels.get(searchIndex).getShow().getImage().getOriginal());
                 intent.putExtra("m_rating",homeRVModels.get(searchIndex).getShow().getRating().getAverage());

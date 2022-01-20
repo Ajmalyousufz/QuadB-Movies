@@ -1,19 +1,19 @@
-package com.ajmalyousufza.quadbmovies;
+package com.ajmalyousufza.quadbmovies.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.ajmalyousufza.quadbmovies.Fragments.HomeFragment;
+import com.ajmalyousufza.quadbmovies.R;
+import com.ajmalyousufza.quadbmovies.Fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -22,23 +22,19 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
     Fragment fragment = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getSupportActionBar().hide();
-
         toolbar = findViewById(R.id.mytoolbar);
         setSupportActionBar(toolbar);
 
-//        getSupportActionBar().setTitle("");
-
         bottomNavigationView = findViewById(R.id.bottom_nav);
-        //searchbar = findViewById(R.id.searchbar);
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container,new HomeFragment()).commit();
         bottomNavigationView.setSelectedItemId(R.id.home);
-        //imageView = findViewById(R.id.searchicon1);
+
 
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -67,15 +63,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Double Click to finish app
+
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
-
-
-
             return;
         }
 

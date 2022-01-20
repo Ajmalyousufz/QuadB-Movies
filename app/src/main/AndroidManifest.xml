@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuadBMovies">
         <activity
-            android:name=".SplashScreen"
+            android:name=".Activities.SplashScreen"
             android:exported="true" >
 
             <intent-filter>
@@ -22,10 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailedActivity"
+            android:name=".Activities.DetailedActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true">
         </activity>
     </application>

@@ -1,4 +1,8 @@
-package com.ajmalyousufza.quadbmovies;
+package com.ajmalyousufza.quadbmovies.Models;
+
+import com.ajmalyousufza.quadbmovies.Models.image;
+import com.ajmalyousufza.quadbmovies.Models.rating;
+import com.ajmalyousufza.quadbmovies.Models.schedule;
 
 public class Show {
 
@@ -9,7 +13,7 @@ public class Show {
     rating rating;
     String language;
 
-    public Show(String name, String summary, com.ajmalyousufza.quadbmovies.image image, com.ajmalyousufza.quadbmovies.schedule schedule, com.ajmalyousufza.quadbmovies.rating rating, String language) {
+    public Show(String name, String summary, com.ajmalyousufza.quadbmovies.Models.image image, com.ajmalyousufza.quadbmovies.Models.schedule schedule, com.ajmalyousufza.quadbmovies.Models.rating rating, String language) {
         this.name = name;
         this.summary = summary;
         this.image = image;
@@ -34,27 +38,27 @@ public class Show {
         this.summary = summary;
     }
 
-    public com.ajmalyousufza.quadbmovies.image getImage() {
+    public com.ajmalyousufza.quadbmovies.Models.image getImage() {
         return image;
     }
 
-    public void setImage(com.ajmalyousufza.quadbmovies.image image) {
+    public void setImage(com.ajmalyousufza.quadbmovies.Models.image image) {
         this.image = image;
     }
 
-    public com.ajmalyousufza.quadbmovies.schedule getSchedule() {
+    public com.ajmalyousufza.quadbmovies.Models.schedule getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(com.ajmalyousufza.quadbmovies.schedule schedule) {
+    public void setSchedule(com.ajmalyousufza.quadbmovies.Models.schedule schedule) {
         this.schedule = schedule;
     }
 
-    public com.ajmalyousufza.quadbmovies.rating getRating() {
+    public com.ajmalyousufza.quadbmovies.Models.rating getRating() {
         return rating;
     }
 
-    public void setRating(com.ajmalyousufza.quadbmovies.rating rating) {
+    public void setRating(com.ajmalyousufza.quadbmovies.Models.rating rating) {
         this.rating = rating;
     }
 

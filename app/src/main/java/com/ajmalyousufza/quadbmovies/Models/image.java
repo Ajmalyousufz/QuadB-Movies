@@ -1,4 +1,4 @@
-package com.ajmalyousufza.quadbmovies;
+package com.ajmalyousufza.quadbmovies.Models;
 
 public class image {
 

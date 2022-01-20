@@ -1,4 +1,4 @@
-package com.ajmalyousufza.quadbmovies;
+package com.ajmalyousufza.quadbmovies.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ajmalyousufza.quadbmovies.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

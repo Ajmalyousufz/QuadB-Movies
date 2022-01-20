@@ -1,4 +1,4 @@
-package com.ajmalyousufza.quadbmovies;
+package com.ajmalyousufza.quadbmovies.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.ajmalyousufza.quadbmovies.Activities.DetailedActivity;
+import com.ajmalyousufza.quadbmovies.Adapters.HomeRVAdapter;
+import com.ajmalyousufza.quadbmovies.Models.HomeRVModel;
+import com.ajmalyousufza.quadbmovies.R;
+import com.ajmalyousufza.quadbmovies.Models.Show;
+import com.ajmalyousufza.quadbmovies.Models.image;
+import com.ajmalyousufza.quadbmovies.Models.rating;
+import com.ajmalyousufza.quadbmovies.Models.schedule;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -72,7 +80,7 @@ public class HomeFragment extends Fragment {
 
         imageView.setOnClickListener(view1 -> {
             String searchstr;
-            //String searchstr = "https://api.tvmaze.com/search/shows?q=${"+editText.getText().toString()+"}";
+
             if(editText.getText().toString().isEmpty()){
 
                  searchstr = "";
@@ -80,7 +88,6 @@ public class HomeFragment extends Fragment {
             else {
                  searchstr = editText.getText().toString();
             }
-            //getSearchData(searchstr);
 
             SearchFragment fragment2 = new SearchFragment();
             Bundle args = new Bundle();
@@ -90,17 +97,6 @@ public class HomeFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.body_container, fragment2);
             fragmentTransaction.commit();
-
-//            Intent intent = new Intent(getContext(),SearchFragment.class);
-//            intent.putExtra("searchurl",searchstr);
-//            intent.putExtra("m_name",homeRVModelArrayListSearch.get(0).getShow().getName());
-//            intent.putExtra("m_image",homeRVModelArrayListSearch.get(0).getShow().getImage().getOriginal());
-//            intent.putExtra("m_rating",homeRVModelArrayListSearch.get(0).getShow().getRating().getAverage());
-//            intent.putExtra("m_sche_day",homeRVModelArrayListSearch.get(0).getShow().getSchedule().getDays());
-//            intent.putExtra("m_sche_time",homeRVModelArrayListSearch.get(0).getShow().getSchedule().getTime());
-//            intent.putExtra("m_summary",homeRVModelArrayListSearch.get(0).getShow().getSummary());
-//            intent.putExtra("m_language",homeRVModelArrayListSearch.get(0).getShow().getLanguage());
-//            startActivity(intent);
 
         });
 
@@ -170,7 +166,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
 
-                Intent intent = new Intent(getContext(),DetailedActivity.class);
+                Intent intent = new Intent(getContext(), DetailedActivity.class);
                 intent.putExtra("m_name",homeRVModelArrayList.get(position).getShow().getName());
                 intent.putExtra("m_image",homeRVModelArrayList.get(position).getShow().getImage().getOriginal());
                 intent.putExtra("m_rating",homeRVModelArrayList.get(position).getShow().getRating().getAverage());

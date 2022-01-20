@@ -1,4 +1,4 @@
-package com.ajmalyousufza.quadbmovies;
+package com.ajmalyousufza.quadbmovies.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ajmalyousufza.quadbmovies.R;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -30,14 +32,13 @@ public class SplashScreen extends AppCompatActivity {
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(Animation.INFINITE);
         animation.setDuration(2000);
-        //splashImage.startAnimation(animation);
         quadblogo.startAnimation(animation);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this,MainActivity.class));
+                startActivity(new Intent(SplashScreen.this, MainActivity.class));
                 finish();
             }
         }, 2000);
